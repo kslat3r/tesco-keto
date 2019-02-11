@@ -26,18 +26,18 @@ jobs:
       - run: npm run test:unit:ci
       - store_test_results:
           path: ./test-results
+
+  build-homepage:
+    executor: node
+    steps:
+      - attach_workspace:
+          at: ./
+      - run: cd packages/homepage
+      - run: npm run build
       - persist_to_workspace:
           root: ./
           paths:
             - ./
-
-  build-homepage:
-    executor: node
-    working_directory: ~/tesco-keto-api/packages/homepage
-    steps:
-      - attach_workspace:
-          at: ./
-      - run: npm run build
 
   deploy:
     executor: node
