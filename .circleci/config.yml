@@ -44,7 +44,7 @@ jobs:
       - attach_workspace:
           at: ./
       - run: mkdir .gcloud
-      - run: echo $KEY > .gcloud/keyfile.json
+      - run: echo $GCLOUD_KEY > .gcloud/keyfile.json
       - run: npm run deploy
 
 workflows:
