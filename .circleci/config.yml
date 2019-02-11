@@ -32,8 +32,7 @@ jobs:
     steps:
       - attach_workspace:
           at: ./
-      - run: cd packages/homepage
-      - run: npm run build
+      - run: cd packages/homepage && npm run build
       - persist_to_workspace:
           root: ./
           paths:
