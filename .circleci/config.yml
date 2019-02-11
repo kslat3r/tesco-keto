@@ -1,0 +1,76 @@
+version: 2.1
+
+executors:
+  node:
+    docker:
+      - image: circleci/node:8.10
+    working_directory: ~/tesco-keto-api
+
+jobs:
+  install:
+    executor: node
+    steps:
+      - checkout
+      - run: npm install
+      - run: npm run bootstrap
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - ./
+
+  test:
+    executor: node
+    steps:
+      - attach_workspace:
+          at: ./
+      - run: npm run test:unit:ci
+      - store_test_results:
+          path: ./test-results
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - ./
+
+  build-homepage:
+    executor: node
+    working_directory: ~/tesco-keto-api/packages/homepage
+    steps:
+      - attach_workspace:
+          at: ./
+      - run: npm run build
+
+  deploy:
+    executor: node
+    steps:
+      - attach_workspace:
+          at: ./
+      - run: mkdir .gcloud
+      - run: echo $KEY > .gcloud/keyfile.json
+      - run: npm run deploy
+
+workflows:
+  version: 2.1
+  release:
+    jobs:
+      - install:
+          filters:
+            branches:
+              only: master
+      - test:
+          requires:
+            - install
+          filters:
+            branches:
+              only: master
+      - build-homepage:
+          requires:
+            - test
+          filters:
+            branches:
+              only: master
+      - deploy:
+          requires:
+            - build-homepage
+          filters:
+            branches:
+              only: master
