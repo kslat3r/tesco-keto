@@ -45,8 +45,8 @@ jobs:
           at: ./
       - run: mkdir .gcloud
       - run: echo $GCLOUD_KEY > .gcloud/keyfile.json
-      - run: echo "TESCO_API_KEY=${TESCO_API_KEY}" >> packages/products/.env
-      - run: ./packages/products/.env
+      - run: echo "TESCO_API_KEY=${TESCO_API_KEY}" >> ./packages/products/.env
+      - run: cat ./packages/products/.env
       - run: npm run deploy
 
 workflows:
