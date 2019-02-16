@@ -8,7 +8,7 @@ module.exports = (req, res) => {
     assert(req.query.offset !== undefined, '"offset" query parameter is required');
   } catch (err) {
     res.status(400)
-      .send(err);
+      .send(new Error(err.message));
 
     return;
   }
@@ -20,6 +20,6 @@ module.exports = (req, res) => {
     })
     .catch((err) => {
       res.status(500)
-        .send(err);
+        .send(err.message);
     });
 };
