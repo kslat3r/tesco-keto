@@ -6,6 +6,7 @@ module.exports = (req, res) => {
   try {
     assert(req.query.query !== undefined, '"name" query parameter is required');
     assert(req.query.offset !== undefined, '"offset" query parameter is required');
+    assert(req.query.limit !== undefined, '"limit" query parameter is required');
   } catch (err) {
     res.status(400)
       .send(new Error(err.message));
@@ -13,7 +14,7 @@ module.exports = (req, res) => {
     return;
   }
 
-  getProducts({ query: req.query.query, offset: req.query.offset })
+  getProducts({ query: req.query.query, offset: req.query.offset, limit: req.query.limit })
     .then((products) => {
       res.status(200)
         .send(products);
