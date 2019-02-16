@@ -33,7 +33,5 @@ functions:
       - http: path
         path: /api/products
         method: GET
-    include:
-      - .env
 
 
