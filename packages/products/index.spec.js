@@ -1,5 +1,6 @@
 const sinon = require('sinon');
-const { assert } = require('chai');
+const { expect } = require('chai');
+const nock = require('nock');
 const products = require('./');
 
 describe('products', () => {
@@ -25,10 +26,61 @@ describe('products', () => {
     };
   });
 
-  it('gets results', (done) => {
+  it('sends error if query parameter is missing', (done) => {
+    delete req.query.query;
+
+    products(req, res)
+      .catch(() => {
+        expect(sendSpy.calledOnce).to.equal(true);
+        expect(sendSpy.lastCall.args[0]).to.deep.equal({ error: '"query" query parameter is required' });
+
+        done();
+      });
+  });
+
+  it('sends error if offset parameter is missing', (done) => {
+    delete req.query.offset;
+
+    products(req, res)
+      .catch(() => {
+        expect(sendSpy.calledOnce).to.equal(true);
+        expect(sendSpy.lastCall.args[0]).to.deep.equal({ error: '"offset" query parameter is required' });
+
+        done();
+      });
+  });
+
+  it('sends error if limit parameter is missing', (done) => {
+    delete req.query.limit;
+
+    products(req, res)
+      .catch(() => {
+        expect(sendSpy.calledOnce).to.equal(true);
+        expect(sendSpy.lastCall.args[0]).to.deep.equal({ error: '"limit" query parameter is required' });
+
+        done();
+      });
+  });
+
+  it('sends error if there is an error downstream', (done) => {
+    nock('https://dev.tescolabs.com')
+      .get('/grocery/products')
+      .reply(500);
+
+    products(req, res)
+      .catch(() => {
+        expect(sendSpy.calledOnce).to.equal(true);
+        expect(sendSpy.lastCall.args[0]).to.deep.equal({ error: 'Downstream error' });
+
+        nock.restore();
+        done();
+      });
+  });
+
+  it('sends results', (done) => {
     products(req, res)
       .then(() => {
-        assert(sendSpy.calledOnce, 'send() was not called once');
+        expect(sendSpy.calledOnce).to.equal(true);
 
         done();
       })

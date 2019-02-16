@@ -12,7 +12,7 @@ module.exports = (req, res) => {
     res.status(400)
       .send({ error: err.message });
 
-    throw err;
+    return Promise.reject(err);
   }
 
   return searchProducts({ query: req.query.query, offset: req.query.offset, limit: req.query.limit })
@@ -30,7 +30,7 @@ module.exports = (req, res) => {
     })
     .catch((err) => {
       res.status(500)
-        .send({ error: err.message });
+        .send({ error: 'Downstream error' });
 
       throw err;
     });
