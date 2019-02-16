@@ -16,8 +16,6 @@ package:
     - node_modules/**
     - .gitignore
     - .git/**
-  include:
-    - .env
 
 functions:
   homepage:
@@ -35,5 +33,7 @@ functions:
       - http: path
         path: /api/products
         method: GET
+    include:
+      - .env
 
 
