@@ -1,4 +1,4 @@
-module.exports = products => products.sort((a, b) => {
+module.exports = (products, sortBy) => products.sort((a, b) => {
   if (!a.calcNutrition.calcNutrients) {
     return 1;
   }
@@ -11,35 +11,26 @@ module.exports = products => products.sort((a, b) => {
     return 0;
   }
 
-  const aCarbsItem = a.calcNutrition.calcNutrients.find(item => item.name.toLowerCase().includes('Carbohydrate'));
-  const bCarbsItem = b.calcNutrition.calcNutrients.find(item => item.name.toLowerCase().includes('Carbohydrate'));
+  const aItem = a.calcNutrition.calcNutrients.find(item => item.name.toLowerCase().includes(sortBy));
+  const bItem = b.calcNutrition.calcNutrients.find(item => item.name.toLowerCase().includes(sortBy));
 
-  if (!aCarbsItem || !aCarbsItem.valuePer100) {
+  console.log(aItem);
+  console.log(bItem);
+
+  if (!aItem || !aItem.valuePer100) {
     return 1;
   }
 
-  if (!bCarbsItem || !bCarbsItem.valuePer100) {
+  if (!bItem || !bItem.valuePer100) {
     return -1;
   }
 
-  if ((!aCarbsItem && !bCarbsItem) || (!aCarbsItem.valuePer100 || !bCarbsItem.valuePer100)) {
+  if ((!aItem && !bItem) || (!aItem.valuePer100 || !bItem.valuePer100)) {
     return 0;
   }
 
-  if (!aCarbsItem) {
-    return 1;
-  }
+  const aVal = parseFloat(aItem.valuePer100, 10);
+  const bVal = parseFloat(bItem.valuePer100, 10);
 
-  if (!bCarbsItem) {
-    return -1;
-  }
-
-  if (!aCarbsItem && !bCarbsItem) {
-    return 0;
-  }
-
-  const aCarbs = parseInt(aCarbsItem.valuePer100, 10);
-  const bCarbs = parseInt(bCarbsItem.valuePer100, 10);
-
-  return bCarbs < aCarbs;
+  return bVal < aVal;
 });
