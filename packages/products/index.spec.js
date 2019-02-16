@@ -97,5 +97,5 @@ describe('products', () => {
         done();
       })
       .catch((err) => done(err));
-  });
+  }).timeout(10000);
 });
