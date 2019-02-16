@@ -13,7 +13,7 @@ describe('products', () => {
       query: {
         query: 'bread',
         offset: 0,
-        limit: 5
+        limit: 100
       }
     };
 
@@ -57,6 +57,18 @@ describe('products', () => {
       .catch(() => {
         expect(sendSpy.calledOnce).to.equal(true);
         expect(sendSpy.lastCall.args[0]).to.deep.equal({ error: '"limit" query parameter is required' });
+
+        done();
+      });
+  });
+
+  it('sends error if limit parameter is more than 100', (done) => {
+    req.query.limit = 101;
+
+    products(req, res)
+      .catch(() => {
+        expect(sendSpy.calledOnce).to.equal(true);
+        expect(sendSpy.lastCall.args[0]).to.deep.equal({ error: '"limit" query parameter must be less than 100' });
 
         done();
       });

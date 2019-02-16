@@ -8,6 +8,7 @@ module.exports = (req, res) => {
     assert(req.query.query !== undefined, '"query" query parameter is required');
     assert(req.query.offset !== undefined, '"offset" query parameter is required');
     assert(req.query.limit !== undefined, '"limit" query parameter is required');
+    assert(parseInt(req.query.limit, 10) <= 100, '"limit" query parameter must be less than 100');
   } catch (err) {
     res.status(400)
       .send({ error: err.message });
