@@ -10,6 +10,8 @@ module.exports = (req, res) => {
     assert(req.query.query !== undefined, '"query" query parameter is required');
     assert(req.query.sortBy !== undefined, '"sortBy" query parameter is required');
     assert(['carbohydrate', 'fat'].includes(req.query.sortBy), '"sortBy" query parameter must be either "carbohydrate" or "fat"');
+    assert(req.query.direction !== undefined, '"direction" query parameter is required');
+    assert(['ASC', 'DESC'].includes(req.query.direction), '"direction" query parameter must be either "ASC" or "DESC"');
   } catch (err) {
     res.status(400)
       .send({ error: err.message });
@@ -27,7 +29,7 @@ module.exports = (req, res) => {
           let products = result.products;
 
           products = filterProducts(products);
-          products = sortProducts(products, req.query.sortBy);
+          products = sortProducts(products, req.query.sortBy, req.query.direction);
 
           res.status(200)
             .send(products);

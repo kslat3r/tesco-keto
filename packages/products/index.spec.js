@@ -12,7 +12,8 @@ describe('products', () => {
     req = {
       query: {
         query: 'bread',
-        sortBy: 'carbohydrate'
+        sortBy: 'carbohydrate',
+        direction: 'ASC'
       }
     };
 
@@ -56,6 +57,30 @@ describe('products', () => {
       .catch(() => {
         expect(sendSpy.calledOnce).to.equal(true);
         expect(sendSpy.lastCall.args[0]).to.deep.equal({ error: '"sortBy" query parameter must be either "carbohydrate" or "fat"' });
+
+        done();
+      });
+  });
+
+  it('sends error if direction parameter is missing', (done) => {
+    delete req.query.direction;
+
+    products(req, res)
+      .catch(() => {
+        expect(sendSpy.calledOnce).to.equal(true);
+        expect(sendSpy.lastCall.args[0]).to.deep.equal({ error: '"direction" query parameter is required' });
+
+        done();
+      });
+  });
+
+  it('sends error if direction parameter is not acceptable', (done) => {
+    req.query.direction = 'sugar';
+
+    products(req, res)
+      .catch(() => {
+        expect(sendSpy.calledOnce).to.equal(true);
+        expect(sendSpy.lastCall.args[0]).to.deep.equal({ error: '"direction" query parameter must be either "ASC" or "DESC"' });
 
         done();
       });
