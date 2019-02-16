@@ -41,5 +41,5 @@ module.exports = products => products.sort((a, b) => {
   const aCarbs = parseInt(aCarbsItem.valuePer100, 10);
   const bCarbs = parseInt(bCarbsItem.valuePer100, 10);
 
-  return bCarbs > aCarbs;
+  return bCarbs < aCarbs;
 });

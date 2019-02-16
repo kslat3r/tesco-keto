@@ -32,6 +32,8 @@ module.exports = (req, res) => {
           products = filterProducts(products);
           products = sortProducts(products);
 
+          console.log(products);
+
           res.status(200)
             .send(products);
         });
