@@ -28,7 +28,7 @@ describe('products', () => {
   it('gets results', (done) => {
     products(req, res)
       .then(() => {
-        // assert(sendSpy.calledOnce, 'send() was not called once');
+        assert(sendSpy.calledOnce, 'send() was not called once');
 
         done();
       })

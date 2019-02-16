@@ -20,7 +20,7 @@ module.exports = (req, res) => {
       const results = result.uk.ghs.products.results;
       const tpnb = results.map(result => result.tpnb);
 
-      getProducts({ tpnb })
+      return getProducts({ tpnb })
         .then((result) => {
           const products = result.products;
 
