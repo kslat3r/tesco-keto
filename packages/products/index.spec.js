@@ -68,7 +68,7 @@ describe('products', () => {
     products(req, res)
       .catch(() => {
         expect(sendSpy.calledOnce).to.equal(true);
-        expect(sendSpy.lastCall.args[0]).to.deep.equal({ error: '"limit" query parameter must be less than 100' });
+        expect(sendSpy.lastCall.args[0]).to.deep.equal({ error: '"limit" query parameter must be less than or equal to 100' });
 
         done();
       });

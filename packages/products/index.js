@@ -2,14 +2,14 @@ require('dotenv').config();
 const { assert } = require('chai');
 const searchProducts = require('./helpers/search-products');
 const getProducts = require('./helpers/get-products');
-const sortByNutritionalInformationAvailable = require('./helpers/sort-by-nutritional-information-available');
+const filterProducts = require('./helpers/filter-products');
 
 module.exports = (req, res) => {
   try {
     assert(req.query.query !== undefined, '"query" query parameter is required');
     assert(req.query.offset !== undefined, '"offset" query parameter is required');
     assert(req.query.limit !== undefined, '"limit" query parameter is required');
-    assert(parseInt(req.query.limit, 10) <= 100, '"limit" query parameter must be less than 100');
+    assert(parseInt(req.query.limit, 10) <= 100, '"limit" query parameter must be less than or equal to 100');
   } catch (err) {
     res.status(400)
       .send({ error: err.message });
@@ -26,7 +26,7 @@ module.exports = (req, res) => {
         .then((result) => {
           let products = result.products;
 
-          products = sortByNutritionalInformationAvailable(products);
+          products = filterProducts(products);
 
           res.status(200)
             .send(products);
