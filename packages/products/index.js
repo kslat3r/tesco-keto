@@ -16,11 +16,11 @@ module.exports = (req, res) => {
 
   getProducts({ query: req.query.query, offset: req.query.offset, limit: req.query.limit })
     .then((result) => {
-      const products = result.uk.ghs.products.results;
-      const tpnbs = products.map(product => product.tpnb);
+      // const products = result.uk.ghs.products.results;
+      // const tpnbs = products.map(product => product.tpnb);
 
       res.status(200)
-        .send(tpnbs);
+        .send(result);
     })
     .catch((err) => {
       res.status(500)
