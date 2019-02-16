@@ -13,7 +13,8 @@ describe('products', () => {
       query: {
         query: 'bread',
         offset: 0,
-        limit: 20
+        limit: 20,
+        orderBy: 'carbohydrate'
       }
     };
 
@@ -69,6 +70,30 @@ describe('products', () => {
       .catch(() => {
         expect(sendSpy.calledOnce).to.equal(true);
         expect(sendSpy.lastCall.args[0]).to.deep.equal({ error: '"limit" query parameter must be less than or equal to 100' });
+
+        done();
+      });
+  });
+
+  it('sends error if orderBy parameter is missing', (done) => {
+    delete req.query.orderBy;
+
+    products(req, res)
+      .catch(() => {
+        expect(sendSpy.calledOnce).to.equal(true);
+        expect(sendSpy.lastCall.args[0]).to.deep.equal({ error: '"orderBy" query parameter is required' });
+
+        done();
+      });
+  });
+
+  it('sends error if orderBy parameter is not acceptable', (done) => {
+    req.query.orderBy = 'sugar';
+
+    products(req, res)
+      .catch(() => {
+        expect(sendSpy.calledOnce).to.equal(true);
+        expect(sendSpy.lastCall.args[0]).to.deep.equal({ error: '"sortBy" query parameter must be either "carbohydrate" or "fat"' });
 
         done();
       });

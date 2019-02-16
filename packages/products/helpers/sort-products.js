@@ -11,8 +11,8 @@ module.exports = products => products.sort((a, b) => {
     return 0;
   }
 
-  const aCarbsItem = a.calcNutrition.calcNutrients.find(item => item.name.includes('Carbohydrate'));
-  const bCarbsItem = b.calcNutrition.calcNutrients.find(item => item.name.includes('Carbohydrate'));
+  const aCarbsItem = a.calcNutrition.calcNutrients.find(item => item.name.toLowerCase().includes('Carbohydrate'));
+  const bCarbsItem = b.calcNutrition.calcNutrients.find(item => item.name.toLowerCase().includes('Carbohydrate'));
 
   if (!aCarbsItem || !aCarbsItem.valuePer100) {
     return 1;

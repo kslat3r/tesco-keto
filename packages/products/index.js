@@ -11,6 +11,8 @@ module.exports = (req, res) => {
     assert(req.query.offset !== undefined, '"offset" query parameter is required');
     assert(req.query.limit !== undefined, '"limit" query parameter is required');
     assert(parseInt(req.query.limit, 10) <= 100, '"limit" query parameter must be less than or equal to 100');
+    assert(req.query.sortBy !== undefined, '"sortBy" query parameter is required');
+    assert(['carbohydrate', 'fat'].includes(req.query.sortBy), '"sortBy" query parameter must be either "carbohydrate" or "fat"');
   } catch (err) {
     res.status(400)
       .send({ error: err.message });
