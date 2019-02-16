@@ -3,6 +3,7 @@ const { assert } = require('chai');
 const searchProducts = require('./helpers/search-products');
 const getProducts = require('./helpers/get-products');
 const filterProducts = require('./helpers/filter-products');
+const sortProducts = require('./helpers/sort-products');
 
 module.exports = (req, res) => {
   try {
@@ -27,6 +28,7 @@ module.exports = (req, res) => {
           let products = result.products;
 
           products = filterProducts(products);
+          products = sortProducts(products);
 
           res.status(200)
             .send(products);
