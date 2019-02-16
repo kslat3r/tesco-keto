@@ -2,6 +2,7 @@ require('dotenv').config();
 const { assert } = require('chai');
 const searchProducts = require('./helpers/search-products');
 const getProducts = require('./helpers/get-products');
+const sortByNutritionalInformationAvailable = require('./helpers/sort-by-nutritional-information-available');
 
 module.exports = (req, res) => {
   try {
@@ -23,7 +24,8 @@ module.exports = (req, res) => {
 
       return getProducts({ tpnb })
         .then((result) => {
-          const products = result.products;
+          let products = result.products;
+          products = sortByNutritionalInformationAvailable(products);
 
           res.status(200)
             .send(products);
