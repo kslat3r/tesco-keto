@@ -6,7 +6,7 @@ module.exports = async (path, qs) => {
     method: 'GET',
     uri: `https://dev.tescolabs.com${path}`,
     qs: Object.assign({}, qs, {
-      limit: 99999999
+      limit: 1000
     }),
     headers: {
       'Ocp-Apim-Subscription-Key': TESCO_API_KEY
