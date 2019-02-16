@@ -9,7 +9,7 @@ module.exports = (req, res) => {
     assert(req.query.limit !== undefined, '"limit" query parameter is required');
   } catch (err) {
     res.status(400)
-      .send(new Error(err.message));
+      .send({ error: err.message });
 
     return;
   }
@@ -21,6 +21,6 @@ module.exports = (req, res) => {
     })
     .catch((err) => {
       res.status(500)
-        .send(err.message);
+        .send({ error: err.message });
     });
 };
