@@ -21,5 +21,6 @@
     "semistandard": "12.0.0",
     "serverless": "1.37.1",
     "serverless-google-cloudfunctions": "2.3.2"
-  }
+  },
+  "dependencies": {}
 }
