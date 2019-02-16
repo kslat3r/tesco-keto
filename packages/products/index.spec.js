@@ -14,7 +14,7 @@ describe('products', () => {
         query: 'bread',
         offset: 0,
         limit: 20,
-        orderBy: 'carbohydrate'
+        sortBy: 'carbohydrate'
       }
     };
 
@@ -75,20 +75,20 @@ describe('products', () => {
       });
   });
 
-  it('sends error if orderBy parameter is missing', (done) => {
-    delete req.query.orderBy;
+  it('sends error if sortBy parameter is missing', (done) => {
+    delete req.query.sortBy;
 
     products(req, res)
       .catch(() => {
         expect(sendSpy.calledOnce).to.equal(true);
-        expect(sendSpy.lastCall.args[0]).to.deep.equal({ error: '"orderBy" query parameter is required' });
+        expect(sendSpy.lastCall.args[0]).to.deep.equal({ error: '"sortBy" query parameter is required' });
 
         done();
       });
   });
 
-  it('sends error if orderBy parameter is not acceptable', (done) => {
-    req.query.orderBy = 'sugar';
+  it('sends error if sortBy parameter is not acceptable', (done) => {
+    req.query.sortBy = 'sugar';
 
     products(req, res)
       .catch(() => {
