@@ -20,11 +20,12 @@ module.exports = (req, res) => {
   return searchProducts({ query: req.query.query, offset: req.query.offset, limit: req.query.limit })
     .then((result) => {
       const results = result.uk.ghs.products.results;
-      const tpnb = results.map(result => result.tpnb);
+      const tpnc = results.map(result => result.id);
 
-      return getProducts({ tpnb })
+      return getProducts({ tpnc })
         .then((result) => {
           let products = result.products;
+
           products = sortByNutritionalInformationAvailable(products);
 
           res.status(200)
