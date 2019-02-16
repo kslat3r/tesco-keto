@@ -33,7 +33,5 @@ functions:
       - http: path
         path: /api/products
         method: GET
-    environmentVariables:
-      TESCO_SUBSCRIPTION_KEY: ${env.TESCO_SUBSCRIPTION_KEY}
 
 
