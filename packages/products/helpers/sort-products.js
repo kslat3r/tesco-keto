@@ -1,1 +1,5 @@
-module.exports = products => products;
+module.exports = products => products.sort((a, b) => {
+  console.log(products);
+
+  return 0;
+});
