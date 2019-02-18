@@ -8,6 +8,10 @@ const wrap = (page) => {
       const app = express();
       const handle = app.getRequestHandler();
 
+      app.get('/', (req, res) => {
+        return app.render(req, res);
+      });
+
       app.get('*', (req, res) => {
         return handle(req, res);
       });
