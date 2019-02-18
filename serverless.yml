@@ -16,6 +16,7 @@ package:
     - node_modules/**
     - .gitignore
     - .git/**
+    - "*.spec.js"
 
 functions:
   homepage:
