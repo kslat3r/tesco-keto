@@ -25,7 +25,9 @@
     "serverless-google-cloudfunctions": "2.3.2",
     "sinon": "7.2.3"
   },
-  "dependencies": {},
+  "dependencies": {
+    "express": "^4.16.4"
+  },
   "nyc": {
     "exclude": [
       "**/*.spec.js"
