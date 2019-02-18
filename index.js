@@ -1,11 +1,17 @@
-const http = require('http');
+const express = require('express');
 const homepage = require('./packages/homepage/.next/serverless/pages');
 const products = require('./packages/products');
 
 const wrap = (page) => (req, res) => {
-  const server = new http.Server(() => page.render(req, res));
+  page.prepare()
+    .then(() => {
+      const app = express();
+      const handle = app.getRequestHandler();
 
-  server.listen(3000, () => console.log("Listening on http://localhost:3000"));
+      app.get('*', (req, res) => {
+        return handle(req, res);
+      });
+    });
 };
 
 module.exports.homepage = wrap(homepage);
