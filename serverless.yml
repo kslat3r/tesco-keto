@@ -16,9 +16,6 @@ package:
     - node_modules/**
     - .gitignore
     - .git/**
-  include:
-    - .next/**
-    - pages/**
 
 functions:
   homepage:
@@ -27,6 +24,9 @@ functions:
       - http: path
         path: /
         method: GET
+    include:
+      - .next/
+      - pages/
   products:
     handler: products
     events:
