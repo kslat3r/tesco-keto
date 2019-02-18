@@ -16,6 +16,8 @@ package:
     - node_modules/**
     - .gitignore
     - .git/**
+  include:
+    - .next
 
 functions:
   homepage:
