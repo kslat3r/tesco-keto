@@ -4,11 +4,8 @@ const next = require('next');
 const homepage = require('./packages/homepage/.next/serverless/pages');
 const products = require('./packages/products');
 
-const wrap = (page) => (req, res) => {
+const wrap = (app) => (req, res) => {
   const port = parseInt(process.env.PORT, 10) || 3000;
-  console.log(port);
-  const dev = process.env.NODE_ENV !== "production";
-  const app = next({ dev });
   const handle = app.getRequestHandler();
 
   app
@@ -16,11 +13,11 @@ const wrap = (page) => (req, res) => {
   .then(() => {
     const server = express();
 
-    server.get("/", (req, res) => {
-      return app.render(req, res, "/", req.params);
+    server.get('/', (req, res) => {
+      return app.render(req, res);
     });
 
-    server.get("*", (req, res) => {
+    server.get('*', (req, res) => {
       return handle(req, res);
     });
 
@@ -32,6 +29,7 @@ const wrap = (page) => (req, res) => {
   })
   .catch(ex => {
     console.log(ex);
+
     process.exit(1);
   });
 };
