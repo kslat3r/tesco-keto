@@ -17,7 +17,8 @@ package:
     - .gitignore
     - .git/**
   include:
-    - .next
+    - .next/**
+    - pages/**
 
 functions:
   homepage:
@@ -26,9 +27,6 @@ functions:
       - http: path
         path: /
         method: GET
-    include:
-      - .next/**
-      - pages/**
   products:
     handler: products
     events:
