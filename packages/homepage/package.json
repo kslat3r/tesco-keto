@@ -11,8 +11,12 @@
   "author": "Ed Kelly",
   "license": "MIT",
   "dependencies": {
+    "@material-ui/core": "^3.9.2",
+    "jss": "^9.8.7",
     "next": "8.0.0",
+    "prop-types": "^15.7.2",
     "react": "^16.8.1",
-    "react-dom": "^16.8.1"
+    "react-dom": "^16.8.1",
+    "react-jss": "^8.6.1"
   }
 }
