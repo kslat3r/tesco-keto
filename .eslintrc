@@ -1,5 +1,8 @@
 {
-  "extends": ["eslint-config-semistandard"],
+  "extends": [
+    "eslint-config-semistandard",
+    "plugin:react/recommended"
+  ],
   "env": {
     "mocha": true
   }
