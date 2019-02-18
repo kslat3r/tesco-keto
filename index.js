@@ -1,37 +1,11 @@
-const express = require('express');
-const next = require('next');
-
 const homepage = require('./packages/homepage/.next/serverless/pages');
 const products = require('./packages/products');
 
-const wrap = (app) => (req, res) => {
-  const port = parseInt(process.env.PORT, 10) || 3000;
-  const handle = app.getRequestHandler();
+const wrap = (page) => (req, res) => {
+  const http = require("http");
+  const server = new http.Server((req, res) => page.render(req, res));
 
-  app
-  .prepare()
-  .then(() => {
-    const server = express();
-
-    server.get('/', (req, res) => {
-      return app.render(req, res);
-    });
-
-    server.get('*', (req, res) => {
-      return handle(req, res);
-    });
-
-    server.listen(port, err => {
-      if (err) throw err;
-
-      console.log(`> Ready on http://localhost:${port}`);
-    });
-  })
-  .catch(ex => {
-    console.log(ex);
-
-    process.exit(1);
-  });
+  server.listen(3000, () => console.log("Listening on http://localhost:3000"));
 };
 
 module.exports.homepage = wrap(homepage);
