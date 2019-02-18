@@ -4,4 +4,3 @@ const products = require('./packages/products');
 module.exports.homepage = homepage;
 module.exports.products = products;
 
-module.exports.homepage();
