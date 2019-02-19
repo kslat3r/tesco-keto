@@ -19,7 +19,7 @@ package:
     - "**/*.spec.js"
 
 functions:
-  homepage:
+  webapp:
     handler: webapp
     events:
       - http: path

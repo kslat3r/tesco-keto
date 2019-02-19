@@ -46,7 +46,7 @@ const styles = theme => ({
   }
 });
 
-function IndexPage (props) {
+function TestPage (props) {
   const { classes } = props;
 
   return (
@@ -69,9 +69,9 @@ function IndexPage (props) {
   );
 }
 
-IndexPage.propTypes = {
+TestPage.propTypes = {
   classes: PropTypes.object.isRequired,
   posts: PropTypes.array
 };
 
-export default withStyles(styles)(IndexPage);
+export default withStyles(styles)(TestPage);
