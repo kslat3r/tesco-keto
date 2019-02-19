@@ -29,12 +29,12 @@ jobs:
       - store_test_results:
           path: ./test-results
 
-  build-homepage:
+  webapp:
     executor: node
     steps:
       - attach_workspace:
           at: ./
-      - run: cd packages/homepage && npm run build
+      - run: cd packages/webapp && npm run build
       - persist_to_workspace:
           root: ./
           paths:
@@ -63,7 +63,7 @@ workflows:
           filters:
             branches:
               only: master
-      - build-homepage:
+      - webapp:
           requires:
             - test
           filters:
@@ -71,7 +71,7 @@ workflows:
               only: master
       - deploy:
           requires:
-            - build-homepage
+            - webapp
           filters:
             branches:
               only: master

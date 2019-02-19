@@ -67,7 +67,7 @@ MyDocument.getInitialProps = ctx => {
     };
 
     WrappedComponent.propTypes = {
-      pageContext: PropTypes.object.isRequired,
+      pageContext: PropTypes.object.isRequired
     };
 
     return WrappedComponent;
@@ -92,7 +92,7 @@ MyDocument.getInitialProps = ctx => {
         />
         {flush() || null}
       </React.Fragment>
-    ),
+    )
   };
 };
 

@@ -1,4 +1,7 @@
-module.exports = (app) => (req, res) => {
+const next = require('next');
+const app = next({ dir: __dirname, dev: false });
+
+module.exports = (req, res) => {
   if (req.url === '') {
     req.url = '/';
   }

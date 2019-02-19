@@ -1,5 +1,5 @@
-const homepage = require('./packages/homepage');
+const webapp = require('./packages/webapp');
 const products = require('./packages/products');
 
-module.exports.homepage = homepage;
+module.exports.webapp = webapp;
 module.exports.products = products;
