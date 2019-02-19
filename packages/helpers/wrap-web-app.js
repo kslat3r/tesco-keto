@@ -7,15 +7,13 @@ module.exports = (app) => (req, res) => {
 
   return app.prepare()
     .then(() => {
-      console.log(req);
+      console.log(req.path);
+      console.log(req.originalUrl);
 
-      const parsedUrl = parse(req.url, true);
-      const { pathname, query } = parsedUrl;
-
-      if (pathname === '/') {
-        app.render(req, res, '/', query);
+      if (req.path === '/') {
+        app.render(req, res, '/', req.query);
       } else {
-        handle(req, res, parsedUrl);
+        handle(req, res, req.path);
       }
     }).listen(port, err => {
       if (err) throw err;
