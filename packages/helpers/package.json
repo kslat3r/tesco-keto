@@ -3,5 +3,6 @@
   "version": "1.0.0",
   "description": "Helpers",
   "author": "Ed Kelly",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {}
 }

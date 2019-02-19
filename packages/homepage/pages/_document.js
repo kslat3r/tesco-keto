@@ -4,7 +4,7 @@ import Document, { Head, Main, NextScript } from 'next/document';
 import flush from 'styled-jsx/server';
 
 class MyDocument extends Document {
-  render() {
+  render () {
     const { pageContext } = this.props;
 
     return (
