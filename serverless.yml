@@ -16,6 +16,7 @@ package:
     - node_modules/**
     - .gitignore
     - .git/**
+    - "*.spec.js"
 
 functions:
   homepage:
@@ -25,8 +26,8 @@ functions:
         path: /
         method: GET
     include:
-      - .next/**
-      - pages/**
+      - .next/
+      - pages/
   products:
     handler: products
     events:

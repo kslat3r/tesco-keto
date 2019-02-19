@@ -1,9 +1,7 @@
-const homepage = require('./packages/homepage/.next/serverless/pages');
+const homepage = require('./packages/homepage');
 const products = require('./packages/products');
 
-const wrap = (page) => (req, res) => {
-  page.render(req, res);
-};
+console.log(homepage);
 
-module.exports.homepage = wrap(homepage);
+module.exports.homepage = homepage;
 module.exports.products = products;
