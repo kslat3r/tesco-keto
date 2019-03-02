@@ -1,11 +1,11 @@
-service: tesco-keto-api # NOTE: Don't put the word "google" in here
+service: tesco-keto # NOTE: Don't put the word "google" in here
 
 provider:
   name: google
   stage: dev
   runtime: nodejs8
   region: europe-west1
-  project: tesco-keto-api
+  project: tesco-keto
   credentials: .gcloud/keyfile.json
 
 plugins:
