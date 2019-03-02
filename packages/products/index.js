@@ -11,10 +11,8 @@ module.exports = (opts) => {
     assert(['carbohydrate', 'fat'].includes(opts.sortBy), '"sortBy" opts parameter must be either "carbohydrate" or "fat"');
     assert(opts.direction !== undefined, '"direction" opts parameter is required');
     assert(['ASC', 'DESC'].includes(opts.direction), '"direction" opts parameter must be either "ASC" or "DESC"');
-  } catch (err) {
-    console.log(err);
-
-    return Promise.reject(err);
+  } catch (e) {
+    return Promise.reject(e);
   }
 
   return searchProducts({ query: opts.query, offset: 0, limit: 50 })
@@ -31,10 +29,5 @@ module.exports = (opts) => {
 
           return products;
         });
-    })
-    .catch((err) => {
-      console.log(err);
-
-      throw err;
     });
 };
