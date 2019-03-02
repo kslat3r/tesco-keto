@@ -1,25 +1,23 @@
-require('dotenv').config();
 const { assert } = require('chai');
 const searchProducts = require('./helpers/search-products');
 const getProducts = require('./helpers/get-products');
 const filterProducts = require('./helpers/filter-products');
 const sortProducts = require('./helpers/sort-products');
 
-module.exports = (req, res) => {
+module.exports = (opts) => {
   try {
-    assert(req.query.query !== undefined, '"query" query parameter is required');
-    assert(req.query.sortBy !== undefined, '"sortBy" query parameter is required');
-    assert(['carbohydrate', 'fat'].includes(req.query.sortBy), '"sortBy" query parameter must be either "carbohydrate" or "fat"');
-    assert(req.query.direction !== undefined, '"direction" query parameter is required');
-    assert(['ASC', 'DESC'].includes(req.query.direction), '"direction" query parameter must be either "ASC" or "DESC"');
+    assert(opts.query !== undefined, '"query" opts parameter is required');
+    assert(opts.sortBy !== undefined, '"sortBy" opts parameter is required');
+    assert(['carbohydrate', 'fat'].includes(opts.sortBy), '"sortBy" opts parameter must be either "carbohydrate" or "fat"');
+    assert(opts.direction !== undefined, '"direction" opts parameter is required');
+    assert(['ASC', 'DESC'].includes(opts.direction), '"direction" opts parameter must be either "ASC" or "DESC"');
   } catch (err) {
-    res.status(400)
-      .send({ error: err.message });
+    console.log(err);
 
     return Promise.reject(err);
   }
 
-  return searchProducts({ query: req.query.query, offset: 0, limit: 50 })
+  return searchProducts({ query: opts.query, offset: 0, limit: 50 })
     .then((result) => {
       const results = result.uk.ghs.products.results;
       const tpnc = results.map(result => result.id);
@@ -29,15 +27,13 @@ module.exports = (req, res) => {
           let products = result.products;
 
           products = filterProducts(products);
-          products = sortProducts(products, req.query.sortBy, req.query.direction);
+          products = sortProducts(products, opts.sortBy, opts.direction);
 
-          return res.status(200)
-            .send(products);
+          return products;
         });
     })
     .catch((err) => {
-      res.status(500)
-        .send({ error: 'Downstream error' });
+      console.log(err);
 
       throw err;
     });
