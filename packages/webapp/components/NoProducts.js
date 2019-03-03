@@ -7,7 +7,10 @@ import Typography from '@material-ui/core/Typography';
 const styles = theme => ({
   root: {
     margin: theme.spacing.unit * 4,
-    padding: theme.spacing.unit * 2
+    padding: theme.spacing.unit * 2,
+    [theme.breakpoints.down('sm')]: {
+      margin: theme.spacing.unit * 2
+    }
   }
 });
 
