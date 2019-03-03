@@ -14,9 +14,6 @@ describe('products', () => {
         query: 'bread',
         sortBy: 'carbohydrate',
         direction: 'ASC'
-      },
-      headers: {
-        origin: 'edkelly.co.uk'
       }
     };
 
@@ -25,9 +22,7 @@ describe('products', () => {
     res = {
       status: () => ({
         send: sendSpy
-      }),
-      setHeader: () => {},
-      getHeader: () => {}
+      })
     };
   });
 
