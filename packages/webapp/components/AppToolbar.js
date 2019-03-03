@@ -46,7 +46,10 @@ const styles = theme => ({
     pointerEvents: 'none',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    [theme.breakpoints.down('sm')]: {
+      display: 'none'
+    }
   },
   inputRoot: {
     color: 'inherit',
@@ -64,6 +67,9 @@ const styles = theme => ({
       '&:focus': {
         width: 200
       }
+    },
+    [theme.breakpoints.down('sm')]: {
+      paddingLeft: theme.spacing.unit
     }
   },
   sortBy: {
