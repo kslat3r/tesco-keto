@@ -1,7 +1,7 @@
 const sinon = require('sinon');
 const { expect } = require('chai');
 const nock = require('nock');
-const index = require('./index');
+const handler = require('./handler');
 
 describe('products', () => {
   let req;
@@ -14,6 +14,9 @@ describe('products', () => {
         query: 'bread',
         sortBy: 'carbohydrate',
         direction: 'ASC'
+      },
+      headers: {
+        origin: 'edkelly.co.uk'
       }
     };
 
@@ -22,14 +25,16 @@ describe('products', () => {
     res = {
       status: () => ({
         send: sendSpy
-      })
+      }),
+      setHeader: () => {},
+      getHeader: () => {}
     };
   });
 
   it('sends error if query parameter is missing', (done) => {
     delete req.query.query;
 
-    index(req, res)
+    handler(req, res)
       .catch(() => {
         expect(sendSpy.calledOnce).to.equal(true);
         expect(sendSpy.lastCall.args[0]).to.deep.equal({ error: '"query" query parameter is required' });
@@ -41,7 +46,7 @@ describe('products', () => {
   it('sends error if sortBy parameter is missing', (done) => {
     delete req.query.sortBy;
 
-    index(req, res)
+    handler(req, res)
       .catch(() => {
         expect(sendSpy.calledOnce).to.equal(true);
         expect(sendSpy.lastCall.args[0]).to.deep.equal({ error: '"sortBy" query parameter is required' });
@@ -53,7 +58,7 @@ describe('products', () => {
   it('sends error if sortBy parameter is not acceptable', (done) => {
     req.query.sortBy = 'sugar';
 
-    index(req, res)
+    handler(req, res)
       .catch(() => {
         expect(sendSpy.calledOnce).to.equal(true);
         expect(sendSpy.lastCall.args[0]).to.deep.equal({ error: '"sortBy" query parameter must be either "carbohydrate" or "fat"' });
@@ -65,7 +70,7 @@ describe('products', () => {
   it('sends error if direction parameter is missing', (done) => {
     delete req.query.direction;
 
-    index(req, res)
+    handler(req, res)
       .catch(() => {
         expect(sendSpy.calledOnce).to.equal(true);
         expect(sendSpy.lastCall.args[0]).to.deep.equal({ error: '"direction" query parameter is required' });
@@ -77,7 +82,7 @@ describe('products', () => {
   it('sends error if direction parameter is not acceptable', (done) => {
     req.query.direction = 'sugar';
 
-    index(req, res)
+    handler(req, res)
       .catch(() => {
         expect(sendSpy.calledOnce).to.equal(true);
         expect(sendSpy.lastCall.args[0]).to.deep.equal({ error: '"direction" query parameter must be either "ASC" or "DESC"' });
@@ -91,7 +96,7 @@ describe('products', () => {
       .get('/grocery/products')
       .reply(500);
 
-    index(req, res)
+    handler(req, res)
       .catch(() => {
         expect(sendSpy.calledOnce).to.equal(true);
         expect(sendSpy.lastCall.args[0]).to.deep.equal({ error: 'Internal server error' });
@@ -102,7 +107,7 @@ describe('products', () => {
   });
 
   it('sends results', (done) => {
-    index(req, res)
+    handler(req, res)
       .then(() => {
         expect(sendSpy.calledOnce).to.equal(true);
 
