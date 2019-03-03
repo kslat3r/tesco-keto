@@ -20,6 +20,8 @@ jobs:
   install:
     executor: node
     steps:
+      - attach_workspace:
+          at: ./
       - run: npm install
       - persist_to_workspace:
           root: ./
