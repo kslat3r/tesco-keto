@@ -5,9 +5,10 @@
   "author": "Ed Kelly",
   "license": "MIT",
   "dependencies": {
-    "chai": "^4.2.0",
-    "dotenv": "^6.2.0",
-    "request": "^2.88.0",
-    "request-promise": "^4.2.4"
+    "chai": "4.2.0",
+    "cors": "2.8.5",
+    "dotenv": "6.2.0",
+    "isomorphic-fetch": "2.2.1",
+    "querystring": "0.2.0"
   }
 }

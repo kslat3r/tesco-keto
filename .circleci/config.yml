@@ -7,14 +7,20 @@ executors:
     working_directory: ~/tesco-keto
 
 jobs:
-  install:
+  setup-environment:
     executor: node
     steps:
       - checkout
+      - run: echo "TESCO_API_KEY=${TESCO_API_KEY}" >> packages/products/.env
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - ./
+
+  install:
+    executor: node
+    steps:
       - run: npm install
-      - run: npm run bootstrap
-      - run: echo "TESCO_API_KEY=${TESCO_API_KEY}" >> ./.env
-      - run: echo "NODE_ENV=production" >> ./.env
       - persist_to_workspace:
           root: ./
           paths:
@@ -53,7 +59,13 @@ workflows:
   version: 2.1
   release:
     jobs:
+      - setup-environment:
+        filters:
+            branches:
+              only: master
       - install:
+          requires:
+            - setup-environment
           filters:
             branches:
               only: master

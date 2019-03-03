@@ -3,7 +3,7 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "bootstrap": "lerna bootstrap",
+    "postinstall": "lerna bootstrap",
     "test": "npm run test:coverage npm run test:unit",
     "test:coverage": "nyc",
     "test:unit": "mocha --exclude './packages/**/node_modules/**' './packages/**/*.spec.js'",
