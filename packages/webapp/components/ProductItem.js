@@ -20,7 +20,10 @@ const styles = theme => ({
     height: 60
   },
   action: {
-    right: '40px'
+    right: '40px',
+    [theme.breakpoints.down('sm')]: {
+      right: theme.spacing.unit
+    }
   }
 });
 
