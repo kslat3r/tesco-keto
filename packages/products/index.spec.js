@@ -109,5 +109,5 @@ describe('products', () => {
         done();
       })
       .catch((err) => done(err));
-  }).timeout(4000);
+  }).timeout(10000);
 });
