@@ -4,6 +4,7 @@ import AppToolbar from '../components/AppToolbar';
 import ProductList from '../components/ProductList';
 import NoProducts from '../components/NoProducts';
 import getProducts from '../lib/get-products';
+import debounce from 'lodash.debounce';
 
 class IndexPage extends React.Component {
   static propTypes = {
@@ -15,6 +16,7 @@ class IndexPage extends React.Component {
     super(props);
 
     this.onChange = this.onChange.bind(this);
+    this.onSearch = this.onSearch.bind(this);
   }
 
   static async getInitialProps () {
@@ -34,14 +36,20 @@ class IndexPage extends React.Component {
       opts: this.props.opts,
       items: this.props.items
     });
+
+    this.onSearchDebounced = debounce(() => {
+      this.onSearch.apply(this, this.state.opts);
+    }, 1000);
   }
 
   async onChange (opts) {
-    this.setState({ opts })
+    await this.setState({ opts });
+  }
 
-    const items = await getProducts(opts);
+  async onSearch () {
+    const items = await getProducts(this.state.opts);
 
-    this.setState({ items });
+    await this.setState({ items });
   }
 
   render () {
@@ -52,6 +60,8 @@ class IndexPage extends React.Component {
         <AppToolbar
           opts={opts}
           onChange={this.onChange}
+          onSearch={this.onSearch}
+          onSearchDebounced={this.onSearchDebounced}
         />
 
         {items.length > 0 ? (

@@ -88,27 +88,33 @@ const styles = theme => ({
 });
 
 function AppToolbar (props) {
-  const { classes, opts, onChange } = props;
+  const { classes, opts, onChange, onSearch, onSearchDebounced } = props;
 
-  const onChangeQuery = (e) => {
-    onChange({
+  const onChangeQuery = async (e) => {
+    await onChange({
       ...opts,
       query: e.target.value
     });
+
+    await onSearchDebounced();
   };
 
-  const onChangeSortBy = (sortBy) => {
-    onChange({
+  const onChangeSortBy = async (sortBy) => {
+    await onChange({
       ...opts,
       sortBy
     });
+
+    await onSearch();
   };
 
-  const onChangeDirection = (direction) => {
-    onChange({
+  const onChangeDirection = async (direction) => {
+    await onChange({
       ...opts,
       direction
     });
+
+    await onSearch();
   };
 
   return (
@@ -225,7 +231,9 @@ function AppToolbar (props) {
 AppToolbar.propTypes = {
   classes: PropTypes.object.isRequired,
   opts: PropTypes.object.isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  onSearch: PropTypes.func.isRequired,
+  onSearchDebounced: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(AppToolbar);
